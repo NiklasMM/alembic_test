@@ -1,0 +1,3 @@
+.pyc
+*.sublime-*
+**/__pycache__/
