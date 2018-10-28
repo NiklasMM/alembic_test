@@ -20,6 +20,7 @@ def upgrade():
     op.create_table('person',
         sa.Column('id', sa.Integer(), nullable=False),
         sa.Column('name', sa.Text(), nullable=True),
+        sa.Column('birthdate', sa.Date(), nullable=False),
         sa.PrimaryKeyConstraint('id')
     )
 

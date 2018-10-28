@@ -3,6 +3,8 @@ from alembic import command
 from sqlalchemy import create_engine
 from sqlalchemy.schema import MetaData
 
+from alembic_test.helpers import generate_fake_data
+
 class Database():
 
     def __init__(self, config, database_url, before_rev, after_rev):
@@ -23,6 +25,10 @@ class Database():
             table = self.metadata.tables[table_name]
 
             for entry in table_data:
+                for column in table.c:
+                    if not column.nullable and column.name not in entry:
+                        entry[column.name.split(".")[-1]] = generate_fake_data(column.type)
+                print(entry)
                 connection.execute(
                     table.insert().values(**entry)
                 )
